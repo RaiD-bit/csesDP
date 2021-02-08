@@ -23,11 +23,11 @@ ll diceCombinationMemo(ll n, vector<ll> &dp)
        return dp[n];
    if(n == 0)
        return 1;
-   int ans = 0;
+   ll ans = 0;
    for(int i = 1; i <= 6; i++)
    {
        if(n - i >= 0)
-           ans += diceCombinationMemo(n-i,dp);
+           (ans += diceCombinationMemo(n-i,dp))%=1000000007;
    }
    return dp[n] = ans;
 }
@@ -37,11 +37,11 @@ int main()
     // n denotes the sum we need to create
     ll n; 
     cin >> n;
-    // lets us try the recursive approach first
+    // lets us try the recursive approach first dont run for larger input as it is highly inefficient.
     cout <<"ans through normal recursion is : " <<  diceCombinationRec(n) << endl;
     // lets us memoize the recursive approach
     vector<ll> dp(n+1,-1);
-    cout <<"ans through memoized recursion(top down) is : " <<diceCombinationMemo(n,dp) << endl;
+    cout <<"ans through memoized recursion(top down) is : " <<diceCombinationMemo(n,dp) << endl; // time compexity : O(nk) k = 6
     // let us see the bottom up approach
     vector<ll> dp1(n+1,-1);
     dp1[0] = 1;
@@ -53,10 +53,10 @@ int main()
         {
             if(i-j>=0)
             {
-                ans += dp1[i-j];
+               (ans += dp1[i-j])%=1000000007;
             }
         }
         dp1[i] = ans;
     }
-    cout <<"ans through memoized recursion(bottom up) is : " << dp1[n] << endl;
+    cout <<"ans through memoized recursion(bottom up) is : " << dp1[n] << endl; // time complexity : O(nk)
 }
